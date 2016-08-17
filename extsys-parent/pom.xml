@@ -18,18 +18,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>org.openo.commonservice.extsys</groupId>
-        <artifactId>extsysparent</artifactId>
+        <artifactId>extsysparent-lite</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>extsys-parent/extsysparent</relativePath>
+        <relativePath>extsysparent-lite</relativePath>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>extsys-root</artifactId>
-    <name>openo/commonservice/extsys/extsys-root</name>
+    <groupId>org.openo.commonservice.extsys</groupId>
+    <artifactId>extsysparent-aggregator</artifactId>
+    <name>openo/commonservice/extsys/extsysparent-aggregator</name>
     <packaging>pom</packaging>
 
     <modules>
-        <module>extsys-parent</module>
-        <module>extsys-core</module>
+        <module>extsysparent</module>
+        <module>extsysparent-lite</module>
     </modules>
 </project>
