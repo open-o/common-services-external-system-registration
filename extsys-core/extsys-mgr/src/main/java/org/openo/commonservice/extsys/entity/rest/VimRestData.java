@@ -87,7 +87,9 @@ public class VimRestData extends BaseRestData {
         this.url = data.getUrl();
         this.userName = data.getUserName();
         this.vimId = data.getId();
+        this.tenant=data.getTenant();
         this.setInstanceId(null);
+        this.setCategory(null);
 
     }
 

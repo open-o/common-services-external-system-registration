@@ -51,9 +51,15 @@ public class SdncHandler extends BaseHandler<SdncData> {
         return query(query, ExtSysResuorceType.SDNC.name());
     }
 
-    public void update(SdncData SdncData, String id) throws ExtsysException {
+    public SdncData update(SdncData SdncData, String id) throws ExtsysException {
         update(SdncData, HqlFactory.getOidFilter(Parameters.id.name(), id),
                 ExtSysResuorceType.SDNC.name());
+        List<SdncData> list = getSdncById(id);
+        if (list.size() <= 0) {
+            logger.error("update sdn info error.");
+            throw new ExtsysException("0000", "update sdn info error");
+        }
+        return list.get(0);
     }
 
     public SdncData add(SdncData sdncData) throws ExtsysException {

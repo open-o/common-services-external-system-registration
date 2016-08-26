@@ -75,6 +75,7 @@ public class EmsRestData extends BaseRestData {
         this.url = data.getUrl();
         this.userName = data.getUserName();
         this.setInstanceId(null);
+        this.setCategory(null);
     }
 
     public EmsRestData() {}

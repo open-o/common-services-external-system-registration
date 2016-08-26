@@ -86,6 +86,7 @@ public class SdncRestData extends BaseRestData {
         this.url = data.getUrl();
         this.userName = data.getUserName();
         this.setInstanceId(null);
+        this.setCategory(null);
 
 
     }

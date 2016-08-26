@@ -33,7 +33,7 @@ database:
   password: extsys
 
   # the JDBC URL
-  url: jdbc:mysql://10.74.148.157:3306/extsys
+  url: jdbc:mysql://127.0.0.1:3306/extsys
 
 # use the simple server factory if you only want to run on a single port
 #server:
@@ -48,7 +48,7 @@ server:
   adminContextPath: /admin
   connector:
     type: http
-    port: 8212
+    port: 8100
 
 # Logging settings.
 logging:

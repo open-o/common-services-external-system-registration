@@ -51,9 +51,15 @@ public class VnfmHandler extends BaseHandler<VnfmData> {
         return query(query, ExtSysResuorceType.VNFM.name());
     }
 
-    public void update(VnfmData vnfmData, String id) throws ExtsysException {
-        update(vnfmData, HqlFactory.getOidFilter(Parameters.id.name(), id),
+    public VnfmData update(VnfmData vnfmData, String id) throws ExtsysException {
+         update(vnfmData, HqlFactory.getOidFilter(Parameters.id.name(), id),
                 ExtSysResuorceType.VNFM.name());
+         List<VnfmData> list = getVnfmById(id);
+         if (list.size() <= 0) {
+             logger.error("update vnfm info error.");
+             throw new ExtsysException("0000", "update vnfm info error");
+         }
+         return list.get(0);
     }
 
     public VnfmData add(VnfmData vnfmData) throws ExtsysException {

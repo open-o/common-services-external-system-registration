@@ -51,9 +51,15 @@ public class VimHandler extends BaseHandler<VimData> {
         return query(query, ExtSysResuorceType.VIM.name());
     }
 
-    public void update(VimData vimData, String id) throws ExtsysException {
+    public VimData update(VimData vimData, String id) throws ExtsysException {
         update(vimData, HqlFactory.getOidFilter(Parameters.id.name(), id),
                 ExtSysResuorceType.VIM.name());
+        List<VimData> list = getVimById(id);
+        if (list.size() <= 0) {
+            logger.error("update vim info error.");
+            throw new ExtsysException("0000", "update vim info error");
+        }
+        return list.get(0);
     }
 
     public VimData add(VimData vimData) throws ExtsysException {

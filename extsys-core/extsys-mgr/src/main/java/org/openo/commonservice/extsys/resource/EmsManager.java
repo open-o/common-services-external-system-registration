@@ -159,14 +159,15 @@ public class EmsManager {
     public Response updateemss(@ApiParam(value = "ems", required = true) EmsData ems,
             @ApiParam(value = "ems id", required = true) @PathParam("emsId") String emsId) {
         LOGGER.info("start update ems .id:" + emsId + " info:" + ExtsysDbUtil.objectToString(ems));
+        EmsData newData;
         try {
-            handler.update(ems, emsId);
+            newData= handler.update(ems, emsId);
         } catch (ExtsysException e) {
             LOGGER.error("update ems failed.errorMsg:" + e.getErrorMsg());
             return RestResponseUtil.getErrorResponse(e);
         }
         LOGGER.info(" update ems end !");
-        return RestResponseUtil.getSuccessResponse(null);
+        return RestResponseUtil.getSuccessResponse(new EmsRestData(newData));
     }
 
     @POST

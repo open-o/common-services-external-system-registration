@@ -30,7 +30,7 @@ import org.openo.commonservice.extsys.exception.ExtsysException;
  ** @author 10159474
  */
 public class CommonHandler extends BaseHandler<BaseData> {
-
+  
     public List<BaseData> getAll() throws ExtsysException {
         Map<String, String> query = new HashMap<String, String>();
         return query(query, ExtSysResuorceType.BASE.name());

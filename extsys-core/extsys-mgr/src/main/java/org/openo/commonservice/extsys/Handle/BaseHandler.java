@@ -111,6 +111,7 @@ public abstract class BaseHandler<T extends BaseData> {
                 + " filter:" + filter);
         try {
             BaseDao dao = DaoManager.getInstance().getDao(resouceType);
+            data.setId(null);
             dao.update(data, filter);
 
         } catch (ExtsysException e) {

@@ -84,7 +84,8 @@ public class VnfmRestData extends BaseRestData {
         this.userName = data.getUserName();
         this.vimId = data.getVimId();
         this.vnfmId = data.getId();
-
+        this.setInstanceId(null);
+        this.setCategory(null);
     }
 
     public VnfmRestData() {

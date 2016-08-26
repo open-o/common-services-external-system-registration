@@ -160,14 +160,15 @@ public class VnfmManager {
             @ApiParam(value = "vnfm id", required = true) @PathParam("vnfmId") String vnfmId) {
         LOGGER.info(
                 "start update vnfm .id:" + vnfmId + " info:" + ExtsysDbUtil.objectToString(vnfm));
+        VnfmData newData;
         try {
-            handler.update(vnfm, vnfmId);
+            newData= handler.update(vnfm, vnfmId);
         } catch (ExtsysException e) {
             LOGGER.error("update vnfm failed.errorMsg:" + e.getErrorMsg());
             return RestResponseUtil.getErrorResponse(e);
         }
         LOGGER.info(" update vnfm end !");
-        return RestResponseUtil.getSuccessResponse(null);
+        return RestResponseUtil.getSuccessResponse(new VnfmRestData(newData));
     }
 
     @POST

@@ -146,7 +146,7 @@ public class VimManager {
     @PUT
     @Path("/{vimId}")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON})
+    @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "update a vim")
     @ApiResponses(value = {
             @ApiResponse(code = HttpStatus.NOT_FOUND_404, message = "microservice not found",
@@ -159,14 +159,15 @@ public class VimManager {
     public Response updatevims(@ApiParam(value = "vim", required = true) VimData vim,
             @ApiParam(value = "vim id", required = true) @PathParam("vimId") String vimId) {
         LOGGER.info("start update vim .id:" + vimId + " info:" + ExtsysDbUtil.objectToString(vim));
+        VimData newData;
         try {
-            handler.update(vim, vimId);
+            newData=  handler.update(vim, vimId);
         } catch (ExtsysException e) {
             LOGGER.error("update vim failed.errorMsg:" + e.getErrorMsg());
             return RestResponseUtil.getErrorResponse(e);
         }
         LOGGER.info(" update vim end !");
-        return RestResponseUtil.getSuccessResponse(null);
+        return RestResponseUtil.getSuccessResponse(new VimRestData(newData));
     }
 
     @POST

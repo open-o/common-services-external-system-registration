@@ -25,12 +25,14 @@ import org.openo.commonservice.extsys.util.HqlFactory;
 import org.openo.commonservice.extsys.common.ExtSysResuorceType;
 import org.openo.commonservice.extsys.common.Parameters;
 import org.openo.commonservice.extsys.exception.ExtsysException;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 /**
  *
  ** @author 10159474
  */
 public class EmsHandler extends BaseHandler<EmsData> {
+    private final static Logger logger = LoggerFactory.getLogger(EmsHandler.class);
 
     @Override
     public boolean validity(EmsData data) throws ExtsysException {
@@ -48,9 +50,15 @@ public class EmsHandler extends BaseHandler<EmsData> {
         return query(query, ExtSysResuorceType.EMS.name());
     }
 
-    public void update(EmsData emsData, String id) throws ExtsysException {
+    public EmsData update(EmsData emsData, String id) throws ExtsysException {
         update(emsData, HqlFactory.getOidFilter(Parameters.id.name(), id),
                 ExtSysResuorceType.EMS.name());
+        List<EmsData> list = getEmsById(id);
+        if (list.size() <= 0) {
+            logger.error("update ems info error.");
+            throw new ExtsysException("0000", "update ems info error");
+        }
+        return list.get(0);
     }
 
     public EmsData add(EmsData emsData) throws ExtsysException {

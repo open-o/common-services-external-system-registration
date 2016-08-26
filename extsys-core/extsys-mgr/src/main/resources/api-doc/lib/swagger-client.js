@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- */
+ 
 /**
  * swagger-client - swagger.js is a javascript client for use with swaggering APIs.
  * @version v2.1.9-M1

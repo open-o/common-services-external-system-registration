@@ -160,14 +160,15 @@ public class SdncManager {
             @ApiParam(value = "sdnc id", required = true) @PathParam("sdncId") String sdncId) {
         LOGGER.info(
                 "start update sdnc .id:" + sdncId + " info:" + ExtsysDbUtil.objectToString(sdnc));
+        SdncData newData;
         try {
-            handler.update(sdnc, sdncId);
+            newData= handler.update(sdnc, sdncId);
         } catch (ExtsysException e) {
             LOGGER.error("update sdnc failed.errorMsg:" + e.getErrorMsg());
             return RestResponseUtil.getErrorResponse(e);
         }
         LOGGER.info(" update sdnc end !");
-        return RestResponseUtil.getSuccessResponse(null);
+        return RestResponseUtil.getSuccessResponse(new SdncRestData(newData));
     }
 
     @POST

@@ -18,6 +18,7 @@ package org.openo.commonservice.extsys;
 
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.openo.commonservice.extsys.common.Config;
+import org.openo.commonservice.extsys.common.ServiceRegistrer;
 import org.openo.commonservice.extsys.entity.db.BaseData;
 import org.openo.commonservice.extsys.entity.db.EmsData;
 import org.openo.commonservice.extsys.entity.db.SdncData;
@@ -71,20 +72,26 @@ public class ExtsysApp extends Application<ExtsysAppConfiguration> {
     private void initDao() {
         DaoManager.getInstance().setSessionFactory(bundle.getSessionFactory());
     }
-
+    private void initService()
+    {
+        Thread registerExtsysService=new Thread(new ServiceRegistrer());
+        registerExtsysService.setName("register extsys service to Microservice Bus");
+        registerExtsysService.start();
+    }
     private void initDB(Bootstrap<ExtsysAppConfiguration> bootstrap) {
         bootstrap.addBundle(bundle);
     }
 
     @Override
     public void run(ExtsysAppConfiguration configuration, Environment environment) {
-        LOGGER.info("Start to initialize catalogue.");
-        initDao();
-        environment.jersey().packages("org.openo.orchestrator.nfv.extsys.resource");
+        LOGGER.info("Start to initialize extsys.");
+        initDao();       
+        environment.jersey().packages("org.openo.commonservice.extsys.resource");
         environment.jersey().register(MultiPartFeature.class);
         initSwaggerConfig(environment, configuration);
         Config.setConfigration(configuration);
-        LOGGER.info("Initialize catalogue finished.");
+        initService();
+        LOGGER.info("Initialize extsys finished.");
     }
 
     /**
@@ -100,7 +107,7 @@ public class ExtsysApp extends Application<ExtsysAppConfiguration> {
         BeanConfig config = new BeanConfig();
         config.setTitle("Open-o ExtSys Service rest API");
         config.setVersion("1.0.0");
-        config.setResourcePackage("org.openo.orchestrator.nfv.extsys.resource");
+        config.setResourcePackage("org.openo.commonservice.extsys.resource");
         // set rest api basepath in swagger
         SimpleServerFactory simpleServerFactory =
                 (SimpleServerFactory) configuration.getServerFactory();
