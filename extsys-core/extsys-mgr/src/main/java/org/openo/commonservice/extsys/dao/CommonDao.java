@@ -21,16 +21,21 @@ import org.openo.commonservice.extsys.entity.db.BaseData;
 
 
 /**
- * host DAO class
+ * a common class for Hibernate DAO classes.<br>
  * 
- * *@author 10159474
- *
+ * @author 10159474
+ * 
  */
 public class CommonDao extends BaseDao<BaseData> {
 
-    public CommonDao(SessionFactory sessionFactory) {
-        super(sessionFactory);
-    }
+  /**
+   * init session.
+   * 
+   * @param sessionFactory session Factory
+   */
+  public CommonDao(SessionFactory sessionFactory) {
+    super(sessionFactory);
+  }
 
 
 }

@@ -16,45 +16,52 @@
 
 package org.openo.commonservice.extsys.db.util;
 
-import java.io.File;
-import java.net.URISyntaxException;
-
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.taskdefs.SQLExec;
 import org.apache.tools.ant.types.EnumeratedAttribute;
 
+import java.io.File;
+import java.net.URISyntaxException;
+
+
 public class H2DbServerUtil {
-    private static String resourcePath;
+  private static String resourcePath;
 
-    public static void initTable() {
-        init();
-        SQLExec sqlExec = new SQLExec();
-        // set db connetc parameter
-        sqlExec.setDriver("org.h2.Driver");
-        sqlExec.setUrl("jdbc:h2:tcp://localhost:8205/" + resourcePath + "db/extsys");
-        sqlExec.setUserid("extsys");
-        sqlExec.setPassword("extsys");
-        // execute sql
-        sqlExec.setSrc(new File(resourcePath + "sql/extsys-resource-createObj-mysql.sql"));
-        sqlExec.setOnerror((SQLExec.OnError) (EnumeratedAttribute.getInstance(SQLExec.OnError.class,
-                "abort")));
-        sqlExec.setPrint(true); // set print
-        sqlExec.setProject(new Project());
-        sqlExec.execute();
-    }
+  /**
+   * init db table.
+   */
+  public static void initTable() {
+    init();
+    SQLExec sqlExec = new SQLExec();
+    // set db connetc parameter
+    sqlExec.setDriver("org.h2.Driver");
+    sqlExec.setUrl("jdbc:h2:tcp://localhost:8205/" + resourcePath + "db/extsys");
+    sqlExec.setUserid("extsys");
+    sqlExec.setPassword("extsys");
+    // execute sql
+    sqlExec.setSrc(new File(resourcePath + "sql/extsys-resource-createObj-mysql.sql"));
+    sqlExec.setOnerror(
+        (SQLExec.OnError) (EnumeratedAttribute.getInstance(SQLExec.OnError.class, "abort")));
+    sqlExec.setPrint(true); // set print
+    sqlExec.setProject(new Project());
+    sqlExec.execute();
+  }
 
-    private static void init() {
-        try {
-            resourcePath = HibernateSession.class.getResource("/").toURI().getPath();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
+  private static void init() {
+    try {
+      resourcePath = HibernateSession.class.getResource("/").toURI().getPath();
+    } catch (URISyntaxException error) {
+      error.printStackTrace();
     }
+  }
 
-    public static void main(String args[]) {
-        H2DbServer.startUp();
-        H2DbServerUtil.initTable();
-        H2DbServer.shutDown();
-    }
+  /**
+   * init db.
+   */
+  public static void main(String [] args) {
+    H2DbServer.startUp();
+    H2DbServerUtil.initTable();
+    H2DbServer.shutDown();
+  }
 
 }

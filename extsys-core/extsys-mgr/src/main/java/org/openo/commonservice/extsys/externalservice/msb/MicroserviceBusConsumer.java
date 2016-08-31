@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.openo.commonservice.extsys.externalservice.msb;
+
+import com.eclipsesource.jaxrs.consumer.ConsumerFactory;
 
 import org.glassfish.jersey.client.ClientConfig;
 import org.openo.commonservice.extsys.common.Config;
@@ -21,25 +24,26 @@ import org.openo.commonservice.extsys.externalservice.entity.ServiceRegisterEnti
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.eclipsesource.jaxrs.consumer.ConsumerFactory;
 
-/**
- * @author 10159474
- *
- */
+
+
 public class MicroserviceBusConsumer {
-    private static final Logger LOG = LoggerFactory.getLogger(MicroserviceBusConsumer.class);
+  private static final Logger LOG = LoggerFactory.getLogger(MicroserviceBusConsumer.class);
 
-    public static boolean registerService(ServiceRegisterEntity entity) {
-        ClientConfig config = new ClientConfig();
-        try {
-            MicroserviceBusRest resourceserviceproxy = ConsumerFactory.createConsumer(
-                    Config.getConfigration().getMsbServerAddr(),config, MicroserviceBusRest.class);
-            resourceserviceproxy.registerServce("false", entity);
-        } catch (Exception e) {
-            LOG.error("microservice register failed!" + e.getMessage());
-            return false;
-        }
-        return true;
+  /**
+   * @param entity service entity
+   * @return register service to msb success return true, else return false.
+   */
+  public static boolean registerService(ServiceRegisterEntity entity) {
+    ClientConfig config = new ClientConfig();
+    try {
+      MicroserviceBusRest resourceserviceproxy = ConsumerFactory.createConsumer(
+          Config.getConfigration().getMsbServerAddr(), config, MicroserviceBusRest.class);
+      resourceserviceproxy.registerServce("false", entity);
+    } catch (Exception error) {
+      LOG.error("microservice register failed!" + error.getMessage());
+      return false;
     }
+    return true;
+  }
 }

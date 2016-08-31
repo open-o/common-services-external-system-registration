@@ -20,75 +20,78 @@ import org.openo.commonservice.extsys.entity.db.VnfmData;
 
 public class VnfmRestData extends BaseRestData {
 
-    private String vnfmId;
-    private String url;
+  private String vnfmId;
+  private String url;
 
-    private String userName;
-    private String password;
-    private String vimId;
-    private String certificateUrl;
+  private String userName;
+  private String password;
+  private String vimId;
+  private String certificateUrl;
 
-    public String getVnfmId() {
-        return vnfmId;
-    }
+  public String getVnfmId() {
+    return vnfmId;
+  }
 
-    public void setVnfmId(String vnfmId) {
-        this.vnfmId = vnfmId;
-    }
+  public void setVnfmId(String vnfmId) {
+    this.vnfmId = vnfmId;
+  }
 
-    public String getUrl() {
-        return url;
-    }
+  public String getUrl() {
+    return url;
+  }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+  public void setUrl(String url) {
+    this.url = url;
+  }
 
-    public String getUserName() {
-        return userName;
-    }
+  public String getUserName() {
+    return userName;
+  }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
+  public void setUserName(String userName) {
+    this.userName = userName;
+  }
 
-    public String getPassword() {
-        return password;
-    }
+  public String getPassword() {
+    return password;
+  }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+  public void setPassword(String password) {
+    this.password = password;
+  }
 
-    public String getVimId() {
-        return vimId;
-    }
+  public String getVimId() {
+    return vimId;
+  }
 
-    public void setVimId(String vimId) {
-        this.vimId = vimId;
-    }
+  public void setVimId(String vimId) {
+    this.vimId = vimId;
+  }
 
-    public String getCertificateUrl() {
-        return certificateUrl;
-    }
+  public String getCertificateUrl() {
+    return certificateUrl;
+  }
 
-    public void setCertificateUrl(String certificateUrl) {
-        this.certificateUrl = certificateUrl;
-    }
+  public void setCertificateUrl(String certificateUrl) {
+    this.certificateUrl = certificateUrl;
+  }
 
-    public VnfmRestData(VnfmData data) {
-        super(data);
-        this.certificateUrl = data.getCertificateUrl();
-        this.password = data.getPassword();
-        this.url = data.getUrl();
-        this.userName = data.getUserName();
-        this.vimId = data.getVimId();
-        this.vnfmId = data.getId();
-        this.setInstanceId(null);
-        this.setCategory(null);
-    }
+  /**
+   * vnfm rest result.
+   */
+  public VnfmRestData(VnfmData data) {
+    super(data);
+    this.certificateUrl = data.getCertificateUrl();
+    this.password = data.getPassword();
+    this.url = data.getUrl();
+    this.userName = data.getUserName();
+    this.vimId = data.getVimId();
+    this.vnfmId = data.getId();
+    this.setInstanceId(null);
+    this.setCategory(null);
+  }
 
-    public VnfmRestData() {
+  public VnfmRestData() {
 
-    }
+  }
 }

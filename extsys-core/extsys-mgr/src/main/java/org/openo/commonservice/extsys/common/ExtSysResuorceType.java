@@ -16,13 +16,11 @@
 
 package org.openo.commonservice.extsys.common;
 
-/**
- ** @author 10159474
- */
-public enum ExtSysResuorceType {
-    VIM, SDNC, EMS, VNFM, BASE;
 
-    public static ExtSysResuorceType getType(String type) {
-        return valueOf(type);
-    }
+public enum ExtSysResuorceType {
+  VIM, SDNC, EMS, VNFM, BASE;
+
+  public static ExtSysResuorceType getType(String type) {
+    return valueOf(type);
+  }
 }

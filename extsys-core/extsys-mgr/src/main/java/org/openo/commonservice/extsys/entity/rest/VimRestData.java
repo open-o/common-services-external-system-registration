@@ -20,80 +20,83 @@ import org.openo.commonservice.extsys.entity.db.VimData;
 
 public class VimRestData extends BaseRestData {
 
-    private String vimId;
+  private String vimId;
 
-    private String url;
+  private String url;
 
-    private String userName;
+  private String userName;
 
-    private String password;
+  private String password;
 
-    private String domain;
+  private String domain;
 
-    private String tenant;
+  private String tenant;
 
-    public String getDomain() {
-        return domain;
-    }
+  public String getDomain() {
+    return domain;
+  }
 
-    public void setDomain(String domain) {
-        this.domain = domain;
-    }
+  public void setDomain(String domain) {
+    this.domain = domain;
+  }
 
-    public String getTenant() {
-        return tenant;
-    }
+  public String getTenant() {
+    return tenant;
+  }
 
-    public void setTenant(String tenant) {
-        this.tenant = tenant;
-    }
+  public void setTenant(String tenant) {
+    this.tenant = tenant;
+  }
 
-    public String getUrl() {
-        return url;
-    }
+  public String getUrl() {
+    return url;
+  }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+  public void setUrl(String url) {
+    this.url = url;
+  }
 
-    public String getUserName() {
-        return userName;
-    }
+  public String getUserName() {
+    return userName;
+  }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
+  public void setUserName(String userName) {
+    this.userName = userName;
+  }
 
-    public String getPassword() {
-        return password;
-    }
+  public String getPassword() {
+    return password;
+  }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+  public void setPassword(String password) {
+    this.password = password;
+  }
 
-    public String getVimId() {
-        return vimId;
-    }
+  public String getVimId() {
+    return vimId;
+  }
 
-    public void setVimId(String vimId) {
-        this.vimId = vimId;
-    }
+  public void setVimId(String vimId) {
+    this.vimId = vimId;
+  }
 
-    public VimRestData(VimData data) {
-        super(data);
-        this.domain = data.getDomain();
-        this.password = data.getPassword();
-        this.url = data.getUrl();
-        this.userName = data.getUserName();
-        this.vimId = data.getId();
-        this.tenant=data.getTenant();
-        this.setInstanceId(null);
-        this.setCategory(null);
+  /**
+   *  vim rest result.
+   */
+  public VimRestData(VimData data) {
+    super(data);
+    this.domain = data.getDomain();
+    this.password = data.getPassword();
+    this.url = data.getUrl();
+    this.userName = data.getUserName();
+    this.vimId = data.getId();
+    this.tenant = data.getTenant();
+    this.setInstanceId(null);
+    this.setCategory(null);
 
-    }
+  }
 
-    public VimRestData() {
+  public VimRestData() {
 
-    }
+  }
 }

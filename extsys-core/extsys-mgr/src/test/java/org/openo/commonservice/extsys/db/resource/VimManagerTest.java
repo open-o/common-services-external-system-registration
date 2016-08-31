@@ -18,8 +18,6 @@ package org.openo.commonservice.extsys.db.resource;
 
 import static org.junit.Assert.assertTrue;
 
-import java.util.List;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -27,133 +25,146 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.openo.commonservice.extsys.Handle.VimHandler;
+
+import org.openo.commonservice.extsys.dao.DaoManager;
 import org.openo.commonservice.extsys.db.util.H2DbServer;
+import org.openo.commonservice.extsys.db.util.HibernateSession;
 import org.openo.commonservice.extsys.entity.db.VimData;
 import org.openo.commonservice.extsys.exception.ExtsysException;
-import org.openo.commonservice.extsys.dao.DaoManager;
-import org.openo.commonservice.extsys.db.util.HibernateSession;
+import org.openo.commonservice.extsys.handle.VimHandler;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+
+import java.util.List;
+
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({VimHandler.class})
 public class VimManagerTest {
-    private VimHandler handler;
-    private String id = "0000000000000000";
+  private VimHandler handler;
+  private String id = "0000000000000000";
 
-    @BeforeClass
-    public static void setUpBeforeClass() throws Exception {
-        H2DbServer.startUp();
+  @BeforeClass
+  public static void setUpBeforeClass() throws Exception {
+    H2DbServer.startUp();
 
+  }
+
+  /**
+   * shut down db.
+   */
+  @AfterClass
+  public static void tearDownAfterClass() throws Exception {
+    try {
+      HibernateSession.destory();
+      H2DbServer.shutDown();
+    } catch (Exception error) {
+      Assert.fail("Exception" + error.getMessage());
     }
+  }
 
-    @AfterClass
-    public static void tearDownAfterClass() throws Exception {
-        try {
-            HibernateSession.destory();
-            H2DbServer.shutDown();
-        } catch (Exception e) {
-            Assert.fail("Exception" + e.getMessage());
-        }
+  /**
+   * init db data.
+   */
+  @Before
+  public void setUp() throws Exception {
+    DaoManager.getInstance().setSessionFactory(HibernateSession.init());
+    VimData data = new VimData();
+    handler = PowerMockito.spy(new VimHandler());
+    PowerMockito.doReturn(true).when(handler, "validity", data);
+    data.setId("10000");
+    data.setName("vim");
+    try {
+      id = handler.add(data).getId();
+    } catch (ExtsysException error) {
+      Assert.fail("Exception" + error.getMessage());
     }
+  }
 
-    @Before
-    public void setUp() throws Exception {
-        DaoManager.getInstance().setSessionFactory(HibernateSession.init());
-        VimData data = new VimData();
-        handler = PowerMockito.spy(new VimHandler());
-        PowerMockito.doReturn(true).when(handler, "validity", data);
-        data.setId("10000");
-        data.setName("vim");
-        try {
-            id = handler.add(data).getId();
-        } catch (ExtsysException e) {
-            Assert.fail("Exception" + e.getMessage());
-        }
+  /**
+   * clear db data.
+   */
+  @After
+  public void tearDown() {
+    try {
+      handler.delete(id);
+    } catch (ExtsysException error) {
+      Assert.fail("Exception" + error.getMessage());
     }
+  }
 
-    @After
-    public void tearDown() {
-        try {
-            handler.delete(id);
-        } catch (ExtsysException e) {
-            Assert.fail("Exception" + e.getMessage());
-        }
+  @Test
+  public void testAddVimInstance_validity_false() throws Exception {
+    VimData data = new VimData();
+    data.setName("Vim");
+    PowerMockito.doReturn(false).when(handler, "validity", data);
+    try {
+      handler.add(data);
+    } catch (ExtsysException error) {
+      Assert.assertTrue(true);
+      return;
     }
+    Assert.fail("not Exception");
+  }
 
-    @Test
-    public void testAddVimInstance_validity_false() throws Exception {
-        VimData data = new VimData();
-        data.setName("Vim");
-        PowerMockito.doReturn(false).when(handler, "validity", data);
-        try {
-            handler.add(data);
-        } catch (ExtsysException e) {
-            Assert.assertTrue(true);
-            return;
-        }
-        Assert.fail("not Exception");
+  @Test
+  public void testAddVimInstance_validity_throw_ExtsysException() throws Exception {
+    VimData data = new VimData();
+    data.setName("vim2");
+    PowerMockito.doReturn(false).when(handler, "validity", data);
+    PowerMockito.doThrow(new ExtsysException()).when(handler, "validity", data);
+    try {
+      handler.add(data);
+    } catch (ExtsysException error) {
+      Assert.assertTrue(true);
+      return;
     }
+    Assert.fail("not Exception");
+  }
 
-    @Test
-    public void testAddVimInstance_validity_throw_ExtsysException() throws Exception {
-        VimData data = new VimData();
-        data.setName("vim2");
-        PowerMockito.doReturn(false).when(handler, "validity", data);
-        PowerMockito.doThrow(new ExtsysException()).when(handler, "validity", data);
-        try {
-            handler.add(data);
-        } catch (ExtsysException e) {
-            Assert.assertTrue(true);
-            return;
-        }
-        Assert.fail("not Exception");
+  @Test
+  public void testQueryVimById_exist() {
+    List<VimData> list = null;
+    try {
+      list = handler.getVimById(id);
+    } catch (ExtsysException error) {
+      Assert.fail("Exception" + error.getMessage());
+      return;
     }
+    Assert.assertTrue(list.size() > 0);
+  }
 
-    @Test
-    public void testQueryVimById_exist() {
-        List<VimData> list = null;
-        try {
-            list = handler.getVimById(id);
-        } catch (ExtsysException e) {
-            Assert.fail("Exception" + e.getMessage());
-            return;
-        }
-        Assert.assertTrue(list.size() > 0);
+  @Test
+  public void testQueryVimById_not_exist() {
+    List<VimData> list = null;
+    try {
+      list = handler.getVimById("100001");
+    } catch (ExtsysException error) {
+      Assert.fail("Exception" + error.getMessage());
+      return;
     }
+    Assert.assertTrue(list.size() == 0);
+  }
 
-    @Test
-    public void testQueryVimById_not_exist() {
-        List<VimData> list = null;
-        try {
-            list = handler.getVimById("100001");
-        } catch (ExtsysException e) {
-            Assert.fail("Exception" + e.getMessage());
-            return;
-        }
-        Assert.assertTrue(list.size() == 0);
+  @Test
+  public void testUpdateVim() {
+    VimData data = new VimData();
+    data.setName("vim_new");
+    try {
+      handler.update(data, id);
+    } catch (ExtsysException error1) {
+      Assert.fail("Exception" + error1.getMessage());
+      return;
     }
-
-    @Test
-    public void testUpdateVim() {
-        VimData data = new VimData();
-        data.setName("vim_new");
-        try {
-            handler.update(data, id);
-        } catch (ExtsysException e1) {
-            Assert.fail("Exception" + e1.getMessage());
-            return;
-        }
-        List<VimData> list = null;
-        try {
-            list = handler.getVimById(id);
-        } catch (ExtsysException e) {
-            Assert.fail("Exception" + e.getMessage());
-            return;
-        }
-        assertTrue(list.size() > 0 && list.get(0).getName().equals("vim_new"));
+    List<VimData> list = null;
+    try {
+      list = handler.getVimById(id);
+    } catch (ExtsysException error) {
+      Assert.fail("Exception" + error.getMessage());
+      return;
     }
+    assertTrue(list.size() > 0 && list.get(0).getName().equals("vim_new"));
+  }
 
 }

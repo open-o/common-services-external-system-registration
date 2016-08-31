@@ -16,37 +16,44 @@
 
 package org.openo.commonservice.extsys.db.util;
 
+import org.h2.tools.Server;
+
 import java.sql.SQLException;
 
-import org.h2.tools.Server;
 
 public class H2DbServer {
 
-    private static Server h2DbWebServer;
-    private static Server h2DbTcpServer;
+  private static Server h2DbWebServer;
+  private static Server h2DbTcpServer;
 
-    public static void startUp() {
-        try {
-            h2DbWebServer = Server
-                    .createWebServer(new String[] {"-web", "-webAllowOthers", "-webPort", "8206"});
-            h2DbWebServer.start();
+  /**
+   * start db.
+   */
+  public static void startUp() {
+    try {
+      h2DbWebServer =
+          Server.createWebServer(new String[] {"-web", "-webAllowOthers", "-webPort", "8206"});
+      h2DbWebServer.start();
 
-            h2DbTcpServer = Server
-                    .createTcpServer(new String[] {"-tcp", "-tcpAllowOthers", "-tcpPort", "8205"});
-            h2DbTcpServer.start();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+      h2DbTcpServer =
+          Server.createTcpServer(new String[] {"-tcp", "-tcpAllowOthers", "-tcpPort", "8205"});
+      h2DbTcpServer.start();
+    } catch (SQLException error) {
+      error.printStackTrace();
     }
+  }
 
-    public static void shutDown() {
-        if (h2DbWebServer.isRunning(true)) {
-            h2DbWebServer.stop();
-            h2DbWebServer.shutdown();
-        }
-        if (h2DbTcpServer.isRunning(true)) {
-            h2DbTcpServer.stop();
-            h2DbTcpServer.shutdown();
-        }
+  /**
+   * stop db.
+   */
+  public static void shutDown() {
+    if (h2DbWebServer.isRunning(true)) {
+      h2DbWebServer.stop();
+      h2DbWebServer.shutdown();
     }
+    if (h2DbTcpServer.isRunning(true)) {
+      h2DbTcpServer.stop();
+      h2DbTcpServer.shutdown();
+    }
+  }
 }

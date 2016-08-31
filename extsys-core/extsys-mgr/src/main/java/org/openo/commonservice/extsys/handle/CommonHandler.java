@@ -14,38 +14,38 @@
  * limitations under the License.
  */
 
-package org.openo.commonservice.extsys.Handle;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+package org.openo.commonservice.extsys.handle;
 
 import org.openo.commonservice.extsys.common.ExtSysResuorceType;
 import org.openo.commonservice.extsys.common.Parameters;
 import org.openo.commonservice.extsys.entity.db.BaseData;
 import org.openo.commonservice.extsys.exception.ExtsysException;
 
-/**
- *
- ** @author 10159474
- */
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+
 public class CommonHandler extends BaseHandler<BaseData> {
-  
-    public List<BaseData> getAll() throws ExtsysException {
-        Map<String, String> query = new HashMap<String, String>();
-        return query(query, ExtSysResuorceType.BASE.name());
-    }
 
-    public List<BaseData> getInstanceById(String id) throws ExtsysException {
-        Map<String, String> query = new HashMap<String, String>();
-        query.put(Parameters.id.name(), id);
-        return query(query, ExtSysResuorceType.BASE.name());
-    }
+  public List<BaseData> getAll() throws ExtsysException {
+    Map<String, String> query = new HashMap<String, String>();
+    return query(query, ExtSysResuorceType.BASE.name());
+  }
 
-    @Override
-    public boolean validity(BaseData data) throws ExtsysException {
-        // TODO Auto-generated method stub
-        return false;
-    }
+  /**
+   * query instance list by id.
+   */
+  public List<BaseData> getInstanceById(String id) throws ExtsysException {
+    Map<String, String> query = new HashMap<String, String>();
+    query.put(Parameters.id.name(), id);
+    return query(query, ExtSysResuorceType.BASE.name());
+  }
+
+  @Override
+  public boolean validity(BaseData data) throws ExtsysException {
+    // TODO Auto-generated method stub
+    return false;
+  }
 
 }

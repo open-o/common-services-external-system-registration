@@ -20,78 +20,80 @@ import org.openo.commonservice.extsys.entity.db.SdncData;
 
 public class SdncRestData extends BaseRestData {
 
-    private String sdnControllerId;
-
-    private String url;
-    private String userName;
-    private String password;
-    private String productName;
-    private String protocol;
-
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getSdnControllerId() {
-        return sdnControllerId;
-    }
-
-    public void setSdnControllerId(String sdnControllerId) {
-        this.sdnControllerId = sdnControllerId;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public String getProtocol() {
-        return protocol;
-    }
-
-    public void setProtocol(String protocol) {
-        this.protocol = protocol;
-    }
-
-    public SdncRestData(SdncData data) {
-        super(data);
-        this.password = data.getPassword();
-        this.productName = data.getProductName();
-        this.protocol = data.getProtocol();
-        this.sdnControllerId = data.getId();
-        this.url = data.getUrl();
-        this.userName = data.getUserName();
-        this.setInstanceId(null);
-        this.setCategory(null);
+  private String sdnControllerId;
+  private String url;
+  private String userName;
+  private String password;
+  private String productName;
+  private String protocol;
 
 
-    }
+  public String getUrl() {
+    return url;
+  }
 
-    public SdncRestData() {
+  public void setUrl(String url) {
+    this.url = url;
+  }
 
-    }
+  public String getUserName() {
+    return userName;
+  }
+
+  public void setUserName(String userName) {
+    this.userName = userName;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  public String getSdnControllerId() {
+    return sdnControllerId;
+  }
+
+  public void setSdnControllerId(String sdnControllerId) {
+    this.sdnControllerId = sdnControllerId;
+  }
+
+  public String getProductName() {
+    return productName;
+  }
+
+  public void setProductName(String productName) {
+    this.productName = productName;
+  }
+
+  public String getProtocol() {
+    return protocol;
+  }
+
+  public void setProtocol(String protocol) {
+    this.protocol = protocol;
+  }
+  
+  /**
+   * sdnc rest result.
+   */
+  public SdncRestData(SdncData data) {
+    super(data);
+    this.password = data.getPassword();
+    this.productName = data.getProductName();
+    this.protocol = data.getProtocol();
+    this.sdnControllerId = data.getId();
+    this.url = data.getUrl();
+    this.userName = data.getUserName();
+    this.setInstanceId(null);
+    this.setCategory(null);
+
+
+  }
+
+  public SdncRestData() {
+
+  }
 }

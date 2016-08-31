@@ -24,38 +24,38 @@ import org.openo.commonservice.extsys.util.ExtsysDbUtil;
 
 public class CatalogDbUtilTest {
 
-    @Test
-    public void when_generate_id_is_not_null() {
-        String actual_uuid = ExtsysDbUtil.generateId();
-        assertNotNull(actual_uuid);
-    }
+  @Test
+  public void when_generate_id_is_not_null() {
+    String actualUuid = ExtsysDbUtil.generateId();
+    assertNotNull(actualUuid);
+  }
 
-    @Test
-    public void when_input_empty_string_output_false() {
-        boolean expect = false;
-        boolean actual = ExtsysDbUtil.isNotEmpty("");
-        assertEquals(expect, actual);
-    }
+  @Test
+  public void when_input_empty_string_output_false() {
+    boolean expect = false;
+    boolean actual = ExtsysDbUtil.isNotEmpty("");
+    assertEquals(expect, actual);
+  }
 
-    @Test
-    public void when_input_blan_string_output_true() {
-        boolean expect = true;
-        boolean actual = ExtsysDbUtil.isNotEmpty(" ");
-        assertEquals(expect, actual);
-    }
+  @Test
+  public void when_input_blan_string_output_true() {
+    boolean expect = true;
+    boolean actual = ExtsysDbUtil.isNotEmpty(" ");
+    assertEquals(expect, actual);
+  }
 
-    @Test
-    public void when_input_null_string_output_false() {
-        boolean expect = false;
-        boolean actual = ExtsysDbUtil.isNotEmpty(null);
-        assertEquals(expect, actual);
-    }
+  @Test
+  public void when_input_null_string_output_false() {
+    boolean expect = false;
+    boolean actual = ExtsysDbUtil.isNotEmpty(null);
+    assertEquals(expect, actual);
+  }
 
-    @Test
-    public void when_input_str_string_output_true() {
-        boolean expect = true;
-        boolean actual = ExtsysDbUtil.isNotEmpty("str");
-        assertEquals(expect, actual);
-    }
+  @Test
+  public void when_input_str_string_output_true() {
+    boolean expect = true;
+    boolean actual = ExtsysDbUtil.isNotEmpty("str");
+    assertEquals(expect, actual);
+  }
 
 }

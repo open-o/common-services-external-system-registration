@@ -16,9 +16,27 @@
 
 package org.openo.commonservice.extsys.resource;
 
+import com.codahale.metrics.annotation.Timed;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
+import org.eclipse.jetty.http.HttpStatus;
+import org.openo.commonservice.extsys.entity.db.SdncData;
+import org.openo.commonservice.extsys.entity.rest.SdncRestData;
+import org.openo.commonservice.extsys.exception.ExtsysException;
+import org.openo.commonservice.extsys.handle.SdncHandler;
+import org.openo.commonservice.extsys.util.ExtsysDbUtil;
+import org.openo.commonservice.extsys.util.RestResponseUtil;
+
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -30,170 +48,166 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.eclipse.jetty.http.HttpStatus;
-import org.openo.commonservice.extsys.Handle.SdncHandler;
-import org.openo.commonservice.extsys.exception.ExtsysException;
-import org.openo.commonservice.extsys.util.RestResponseUtil;
-import org.openo.commonservice.extsys.entity.db.SdncData;
-import org.openo.commonservice.extsys.entity.rest.SdncRestData;
-import org.openo.commonservice.extsys.util.ExtsysDbUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.codahale.metrics.annotation.Timed;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
-
 @Path("/sdncs")
 @Api(tags = {" sdnc Management     "})
 public class SdncManager {
 
-    SdncHandler handler = new SdncHandler();
-    private static final Logger LOGGER = LoggerFactory.getLogger(SdncManager.class);
+  SdncHandler handler = new SdncHandler();
+  private static final Logger LOGGER = LoggerFactory.getLogger(SdncManager.class);
 
-    @Path("")
-    @GET
-    @ApiOperation(value = "get  all sdnc ")
-    @Produces(MediaType.APPLICATION_JSON)
-    @ApiResponses(value = {
-            @ApiResponse(code = HttpStatus.NOT_FOUND_404, message = "microservice not found",
-                    response = String.class),
-            @ApiResponse(code = HttpStatus.UNSUPPORTED_MEDIA_TYPE_415,
-                    message = "Unprocessable MicroServiceInfo Entity ", response = String.class),
-            @ApiResponse(code = HttpStatus.INTERNAL_SERVER_ERROR_500,
-                    message = "internal server error", response = String.class)})
-    @Timed
-    public Response querysdncList() {
-        LOGGER.info("start query all sdnc!");
-        List<SdncData> list;
-        try {
-            list = handler.getAll();
-        } catch (ExtsysException e) {
-            LOGGER.error("query all sdnc failed.errorMsg:" + e.getErrorMsg());
-            return RestResponseUtil.getErrorResponse(e);
-        }
-        if (list == null || list.size() <= 0) {
-            LOGGER.info("query all sdnc end.no match condition record");
-            return RestResponseUtil.getSuccessResponse(null);
-        } else {
-            LOGGER.info("query all sdnc end.size:" + list.size());
-            ArrayList<SdncRestData> restList = new ArrayList<SdncRestData>();
-            for (int i = 0; i < list.size(); i++) {
-                restList.add(new SdncRestData(list.get(i)));
-            }
-            return RestResponseUtil.getSuccessResponse(restList);
-        }
-
+  /**
+   *query all sdnc.
+   */
+  @Path("")
+  @GET
+  @ApiOperation(value = "get  all sdnc ")
+  @Produces(MediaType.APPLICATION_JSON)
+  @ApiResponses(value = {
+      @ApiResponse(code = HttpStatus.NOT_FOUND_404, message = "microservice not found",
+          response = String.class),
+      @ApiResponse(code = HttpStatus.UNSUPPORTED_MEDIA_TYPE_415,
+          message = "Unprocessable MicroServiceInfo Entity ", response = String.class),
+      @ApiResponse(code = HttpStatus.INTERNAL_SERVER_ERROR_500, message = "internal server error",
+          response = String.class)})
+  @Timed
+  public Response querysdncList() {
+    LOGGER.info("start query all sdnc!");
+    List<SdncData> list;
+    try {
+      list = handler.getAll();
+    } catch (ExtsysException error) {
+      LOGGER.error("query all sdnc failed.errorMsg:" + error.getErrorMsg());
+      return RestResponseUtil.getErrorResponse(error);
+    }
+    if (list == null || list.size() <= 0) {
+      LOGGER.info("query all sdnc end.no match condition record");
+      return RestResponseUtil.getSuccessResponse(null);
+    } else {
+      LOGGER.info("query all sdnc end.size:" + list.size());
+      ArrayList<SdncRestData> restList = new ArrayList<SdncRestData>();
+      for (int i = 0; i < list.size(); i++) {
+        restList.add(new SdncRestData(list.get(i)));
+      }
+      return RestResponseUtil.getSuccessResponse(restList);
     }
 
-    @Path("/{sdncId}")
-    @GET
-    @ApiOperation(value = "get sdnc by id")
-    @Produces(MediaType.APPLICATION_JSON)
-    @ApiResponses(value = {
-            @ApiResponse(code = HttpStatus.NOT_FOUND_404, message = "microservice not found",
-                    response = String.class),
-            @ApiResponse(code = HttpStatus.UNSUPPORTED_MEDIA_TYPE_415,
-                    message = "Unprocessable MicroServiceInfo Entity ", response = String.class),
-            @ApiResponse(code = HttpStatus.INTERNAL_SERVER_ERROR_500,
-                    message = "internal server error", response = String.class)})
-    @Timed
-    public Response querysdncById(@ApiParam(value = "sdnc id") @PathParam("sdncId") String sdncId) {
-        LOGGER.info("start query  sdnc by id." + sdncId);
-        List<SdncData> list;
-        try {
-            list = handler.getSdncById(sdncId);
-        } catch (ExtsysException e) {
-            LOGGER.error("query  sdnc failed.errorMsg:" + e.getErrorMsg());
-            return RestResponseUtil.getErrorResponse(e);
-        }
-        if (list == null || list.size() <= 0) {
-            LOGGER.info("query  sdnc end.no match condition record");
-            return RestResponseUtil.getSuccessResponse(null);
-        } else {
-            LOGGER.info("query  sdnc end.info:" + ExtsysDbUtil.objectToString(list));
-            return RestResponseUtil.getSuccessResponse(new SdncRestData(list.get(0)));
-        }
+  }
+  
+  /**
+   *query  sdnc by id.
+   */
+  @Path("/{sdncId}")
+  @GET
+  @ApiOperation(value = "get sdnc by id")
+  @Produces(MediaType.APPLICATION_JSON)
+  @ApiResponses(value = {
+      @ApiResponse(code = HttpStatus.NOT_FOUND_404, message = "microservice not found",
+          response = String.class),
+      @ApiResponse(code = HttpStatus.UNSUPPORTED_MEDIA_TYPE_415,
+          message = "Unprocessable MicroServiceInfo Entity ", response = String.class),
+      @ApiResponse(code = HttpStatus.INTERNAL_SERVER_ERROR_500, message = "internal server error",
+          response = String.class)})
+  @Timed
+  public Response querysdncById(@ApiParam(value = "sdnc id") @PathParam("sdncId") String sdncId) {
+    LOGGER.info("start query  sdnc by id." + sdncId);
+    List<SdncData> list;
+    try {
+      list = handler.getSdncById(sdncId);
+    } catch (ExtsysException error) {
+      LOGGER.error("query  sdnc failed.errorMsg:" + error.getErrorMsg());
+      return RestResponseUtil.getErrorResponse(error);
     }
-
-    @Path("/{sdncId}")
-    @DELETE
-    @ApiOperation(value = "delete a sdnc")
-    @ApiResponses(value = {
-            @ApiResponse(code = HttpStatus.NOT_FOUND_404, message = "microservice not found",
-                    response = String.class),
-            @ApiResponse(code = HttpStatus.UNSUPPORTED_MEDIA_TYPE_415,
-                    message = "Unprocessable MicroServiceInfo Entity ", response = String.class),
-            @ApiResponse(code = HttpStatus.INTERNAL_SERVER_ERROR_500,
-                    message = "internal server error", response = String.class)})
-    @Timed
-    public Response delsdnc(@ApiParam(value = "sdnc id") @PathParam("sdncId") String sdncId) {
-        LOGGER.info("start delete sdnc .id:" + sdncId);
-        try {
-            handler.delete(sdncId);
-        } catch (ExtsysException e) {
-            LOGGER.error("delete sdnc failed.errorMsg:" + e.getErrorMsg());
-            return RestResponseUtil.getErrorResponse(e);
-        }
-        LOGGER.info(" delete sdnc end !");
-        return Response.noContent().build();
+    if (list == null || list.size() <= 0) {
+      LOGGER.info("query  sdnc end.no match condition record");
+      return RestResponseUtil.getSuccessResponse(null);
+    } else {
+      LOGGER.info("query  sdnc end.info:" + ExtsysDbUtil.objectToString(list));
+      return RestResponseUtil.getSuccessResponse(new SdncRestData(list.get(0)));
     }
-
-    @PUT
-    @Path("/{sdncId}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON})
-    @ApiOperation(value = "update a sdnc")
-    @ApiResponses(value = {
-            @ApiResponse(code = HttpStatus.NOT_FOUND_404, message = "microservice not found",
-                    response = String.class),
-            @ApiResponse(code = HttpStatus.UNSUPPORTED_MEDIA_TYPE_415,
-                    message = "Unprocessable MicroServiceInfo Entity ", response = String.class),
-            @ApiResponse(code = HttpStatus.INTERNAL_SERVER_ERROR_500,
-                    message = "internal server error", response = String.class)})
-    @Timed
-    public Response updatesdncs(@ApiParam(value = "sdnc", required = true) SdncData sdnc,
-            @ApiParam(value = "sdnc id", required = true) @PathParam("sdncId") String sdncId) {
-        LOGGER.info(
-                "start update sdnc .id:" + sdncId + " info:" + ExtsysDbUtil.objectToString(sdnc));
-        SdncData newData;
-        try {
-            newData= handler.update(sdnc, sdncId);
-        } catch (ExtsysException e) {
-            LOGGER.error("update sdnc failed.errorMsg:" + e.getErrorMsg());
-            return RestResponseUtil.getErrorResponse(e);
-        }
-        LOGGER.info(" update sdnc end !");
-        return RestResponseUtil.getSuccessResponse(new SdncRestData(newData));
+  }
+  
+  /**
+   *delete  sdnc by id.
+   */
+  @Path("/{sdncId}")
+  @DELETE
+  @ApiOperation(value = "delete a sdnc")
+  @ApiResponses(value = {
+      @ApiResponse(code = HttpStatus.NOT_FOUND_404, message = "microservice not found",
+          response = String.class),
+      @ApiResponse(code = HttpStatus.UNSUPPORTED_MEDIA_TYPE_415,
+          message = "Unprocessable MicroServiceInfo Entity ", response = String.class),
+      @ApiResponse(code = HttpStatus.INTERNAL_SERVER_ERROR_500, message = "internal server error",
+          response = String.class)})
+  @Timed
+  public Response delsdnc(@ApiParam(value = "sdnc id") @PathParam("sdncId") String sdncId) {
+    LOGGER.info("start delete sdnc .id:" + sdncId);
+    try {
+      handler.delete(sdncId);
+    } catch (ExtsysException error) {
+      LOGGER.error("delete sdnc failed.errorMsg:" + error.getErrorMsg());
+      return RestResponseUtil.getErrorResponse(error);
     }
-
-    @POST
-    @Path("")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON})
-    @ApiOperation(value = "create a sdnc")
-    @ApiResponses(value = {
-            @ApiResponse(code = HttpStatus.NOT_FOUND_404, message = "microservice not found",
-                    response = String.class),
-            @ApiResponse(code = HttpStatus.UNSUPPORTED_MEDIA_TYPE_415,
-                    message = "Unprocessable MicroServiceInfo Entity ", response = String.class),
-            @ApiResponse(code = HttpStatus.INTERNAL_SERVER_ERROR_500,
-                    message = "internal server error", response = String.class)})
-    @Timed
-    public Response addsdncs(@ApiParam(value = "sdnc", required = true) SdncData sdnc) {
-        LOGGER.info("start add sdnc" + " info:" + ExtsysDbUtil.objectToString(sdnc));
-        SdncData sdncData;
-        try {
-            sdncData = handler.add(sdnc);
-        } catch (ExtsysException e) {
-            LOGGER.error("add sdnc failed.errorMsg:" + e.getErrorMsg());
-            return RestResponseUtil.getErrorResponse(e);
-        }
-        LOGGER.info(" add sdnc end !");
-        return RestResponseUtil.getCreateSussceeResponse(new SdncRestData(sdncData));
+    LOGGER.info(" delete sdnc end !");
+    return Response.noContent().build();
+  }
+  
+  /**
+   *update sdnc by id.
+   */
+  @PUT
+  @Path("/{sdncId}")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON})
+  @ApiOperation(value = "update a sdnc")
+  @ApiResponses(value = {
+      @ApiResponse(code = HttpStatus.NOT_FOUND_404, message = "microservice not found",
+          response = String.class),
+      @ApiResponse(code = HttpStatus.UNSUPPORTED_MEDIA_TYPE_415,
+          message = "Unprocessable MicroServiceInfo Entity ", response = String.class),
+      @ApiResponse(code = HttpStatus.INTERNAL_SERVER_ERROR_500, message = "internal server error",
+          response = String.class)})
+  @Timed
+  public Response updatesdncs(@ApiParam(value = "sdnc", required = true) SdncData sdnc,
+      @ApiParam(value = "sdnc id", required = true) @PathParam("sdncId") String sdncId) {
+    LOGGER.info("start update sdnc .id:" + sdncId + " info:" + ExtsysDbUtil.objectToString(sdnc));
+    SdncData newData;
+    try {
+      newData = handler.update(sdnc, sdncId);
+    } catch (ExtsysException error) {
+      LOGGER.error("update sdnc failed.errorMsg:" + error.getErrorMsg());
+      return RestResponseUtil.getErrorResponse(error);
     }
+    LOGGER.info(" update sdnc end !");
+    return RestResponseUtil.getSuccessResponse(new SdncRestData(newData));
+  }
+  
+  /**
+   *add  sdnc.
+   */
+  @POST
+  @Path("")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON})
+  @ApiOperation(value = "create a sdnc")
+  @ApiResponses(value = {
+      @ApiResponse(code = HttpStatus.NOT_FOUND_404, message = "microservice not found",
+          response = String.class),
+      @ApiResponse(code = HttpStatus.UNSUPPORTED_MEDIA_TYPE_415,
+          message = "Unprocessable MicroServiceInfo Entity ", response = String.class),
+      @ApiResponse(code = HttpStatus.INTERNAL_SERVER_ERROR_500, message = "internal server error",
+          response = String.class)})
+  @Timed
+  public Response addsdncs(@ApiParam(value = "sdnc", required = true) SdncData sdnc) {
+    LOGGER.info("start add sdnc" + " info:" + ExtsysDbUtil.objectToString(sdnc));
+    SdncData sdncData;
+    try {
+      sdncData = handler.add(sdnc);
+    } catch (ExtsysException error) {
+      LOGGER.error("add sdnc failed.errorMsg:" + error.getErrorMsg());
+      return RestResponseUtil.getErrorResponse(error);
+    }
+    LOGGER.info(" add sdnc end !");
+    return RestResponseUtil.getCreateSussceeResponse(new SdncRestData(sdncData));
+  }
 }

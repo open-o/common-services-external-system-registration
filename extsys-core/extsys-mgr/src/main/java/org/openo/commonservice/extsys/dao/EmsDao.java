@@ -20,17 +20,18 @@ import org.hibernate.SessionFactory;
 import org.openo.commonservice.extsys.entity.db.EmsData;
 
 
+
 /**
- * host DAO class
+ * ems  for Hibernate DAO classes.<br>
  * 
- * *@author 10159474
- *
+ * @author 10159474
+ * 
  */
 public class EmsDao extends BaseDao<EmsData> {
 
-    public EmsDao(SessionFactory sessionFactory) {
-        super(sessionFactory);
-    }
+  public EmsDao(SessionFactory sessionFactory) {
+    super(sessionFactory);
+  }
 
 
 }

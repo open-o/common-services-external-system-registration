@@ -20,63 +20,66 @@ import org.openo.commonservice.extsys.entity.db.EmsData;
 
 public class EmsRestData extends BaseRestData {
 
-    private String productName;
+  private String productName;
 
-    private String url;
-    private String userName;
-    private String password;
-    private String emsId;
+  private String url;
+  private String userName;
+  private String password;
+  private String emsId;
 
-    public String getProductName() {
-        return productName;
-    }
+  public String getProductName() {
+    return productName;
+  }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
+  public void setProductName(String productName) {
+    this.productName = productName;
+  }
 
-    public String getUrl() {
-        return url;
-    }
+  public String getUrl() {
+    return url;
+  }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+  public void setUrl(String url) {
+    this.url = url;
+  }
 
-    public String getUserName() {
-        return userName;
-    }
+  public String getUserName() {
+    return userName;
+  }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
+  public void setUserName(String userName) {
+    this.userName = userName;
+  }
 
-    public String getPassword() {
-        return password;
-    }
+  public String getPassword() {
+    return password;
+  }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+  public void setPassword(String password) {
+    this.password = password;
+  }
 
-    public String getEmsId() {
-        return emsId;
-    }
+  public String getEmsId() {
+    return emsId;
+  }
 
-    public void setEmsId(String emsId) {
-        this.emsId = emsId;
-    }
+  public void setEmsId(String emsId) {
+    this.emsId = emsId;
+  }
 
-    public EmsRestData(EmsData data) {
-        super(data);
-        this.emsId = data.getId();
-        this.password = data.getPassword();
-        this.productName = data.getProductName();
-        this.url = data.getUrl();
-        this.userName = data.getUserName();
-        this.setInstanceId(null);
-        this.setCategory(null);
-    }
+  /**
+   * ems rest result.
+   */
+  public EmsRestData(EmsData data) {
+    super(data);
+    this.emsId = data.getId();
+    this.password = data.getPassword();
+    this.productName = data.getProductName();
+    this.url = data.getUrl();
+    this.userName = data.getUserName();
+    this.setInstanceId(null);
+    this.setCategory(null);
+  }
 
-    public EmsRestData() {}
+  public EmsRestData() {}
 }

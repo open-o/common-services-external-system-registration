@@ -21,17 +21,18 @@ import org.openo.commonservice.extsys.entity.db.SdncData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
 /**
- * DAO class
+ * sdnc  for Hibernate DAO classes.<br>
  * 
- * *@author 10159474
- *
+ * @author 10159474
+ * 
  */
 public class SdncDao extends BaseDao<SdncData> {
-    private static final Logger logger = LoggerFactory.getLogger(SdncDao.class);
+  private static final Logger logger = LoggerFactory.getLogger(SdncDao.class);
 
-    public SdncDao(SessionFactory sessionFactory) {
-        super(sessionFactory);
-    }
+  public SdncDao(SessionFactory sessionFactory) {
+    super(sessionFactory);
+  }
 
 }

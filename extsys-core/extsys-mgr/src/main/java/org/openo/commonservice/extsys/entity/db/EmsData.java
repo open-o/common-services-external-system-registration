@@ -16,12 +16,14 @@
 
 package org.openo.commonservice.extsys.entity.db;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 
 @Entity
 @Table(name = "extsys_ems_table")
@@ -30,50 +32,50 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class EmsData extends BaseData {
 
 
-    @Column(name = "PRODUCTNAME")
-    private String productName;
+  @Column(name = "PRODUCTNAME")
+  private String productName;
 
-    @Column(name = "URL")
-    private String url;
+  @Column(name = "URL")
+  private String url;
 
-    @Column(name = "USERNAME")
-    private String userName;
+  @Column(name = "USERNAME")
+  private String userName;
 
-    @Column(name = "PASSWORD")
-    private String password;
+  @Column(name = "PASSWORD")
+  private String password;
 
 
-    public String getUrl() {
-        return url;
-    }
+  public String getUrl() {
+    return url;
+  }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+  public void setUrl(String url) {
+    this.url = url;
+  }
 
-    public String getUserName() {
-        return userName;
-    }
+  public String getUserName() {
+    return userName;
+  }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
+  public void setUserName(String userName) {
+    this.userName = userName;
+  }
 
-    public String getPassword() {
-        return password;
-    }
+  public String getPassword() {
+    return password;
+  }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+  public void setPassword(String password) {
+    this.password = password;
+  }
 
-    public String getProductName() {
-        return productName;
-    }
+  public String getProductName() {
+    return productName;
+  }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
+  public void setProductName(String productName) {
+    this.productName = productName;
+  }
 
 
 

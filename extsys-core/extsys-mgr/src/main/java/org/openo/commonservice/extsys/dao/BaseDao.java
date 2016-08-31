@@ -16,8 +16,8 @@
 
 package org.openo.commonservice.extsys.dao;
 
-import java.util.List;
-import java.util.Map;
+import io.dropwizard.hibernate.AbstractDAO;
+import io.dropwizard.util.Generics;
 
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -28,164 +28,190 @@ import org.hibernate.criterion.Restrictions;
 import org.openo.commonservice.extsys.exception.ExtsysException;
 import org.openo.commonservice.extsys.util.HqlFactory;
 
-import io.dropwizard.hibernate.AbstractDAO;
-import io.dropwizard.util.Generics;
+import java.util.List;
+import java.util.Map;
 
 /**
- * a base class for Hibernate DAO classes
- * 
+ * a base class for Hibernate DAO classes.<br>
  * provide the common methods to create,delete,update and query data
  * 
- * *@author 10159474
- *
- * @param <T>
+ * @author 10159474
+ * 
  */
 public class BaseDao<T> extends AbstractDAO<T> {
 
-    public BaseDao(SessionFactory sessionFactory) {
-        super(sessionFactory);
-        this.sessionFactory = sessionFactory;
-        this.entityClass = Generics.getTypeParameter(getClass());
-    }
+  /**
+   * init session.
+   * 
+   * @param sessionFactory session Factory
+   */
+  public BaseDao(SessionFactory sessionFactory) {
+    super(sessionFactory);
+    this.sessionFactory = sessionFactory;
+    this.entityClass = Generics.getTypeParameter(getClass());
+  }
 
-    public String[] excludeProperties;
-    private SessionFactory sessionFactory;
-    protected Session session;
-    private final Class<?> entityClass;
+  public String[] excludeProperties;
+  private SessionFactory sessionFactory;
+  protected Session session;
+  private final Class<?> entityClass;
 
-    @Override
-    protected Session currentSession() {
-        return this.session;
-    }
+  @Override
+  protected Session currentSession() {
+    return this.session;
+  }
 
-    /**
-     * @param data the object to update
-     * @throws ExtsysException
-     */
-    public void update(T data, String filter) throws ExtsysException {
-        try {
-            String hql = HqlFactory.getUpdateHql(data, excludeProperties, filter);
-            beginTransaction();
-            Query query = this.session.createQuery(hql);
-            query.executeUpdate();
-            closeTransaction();
-        } catch (Exception e) {
-            transactionRollBack();
-            throw new ExtsysException("", "error while updating data.errorMsg:" + e.getMessage());
-        } finally {
-            closeSession();
-        }
+  /**
+   * update entity .
+   * 
+   * @param data the object to update
+   * @throws ExtsysException when db abnormal
+   */
+  public void update(T data, String filter) throws ExtsysException {
+    try {
+      String hql = HqlFactory.getUpdateHql(data, excludeProperties, filter);
+      beginTransaction();
+      Query query = this.session.createQuery(hql);
+      query.executeUpdate();
+      closeTransaction();
+    } catch (Exception error) {
+      transactionRollBack();
+      throw new ExtsysException("", "error while updating data.errorMsg:" + error.getMessage());
+    } finally {
+      closeSession();
     }
+  }
 
-    /**
-     * @param data the object to delete
-     * @throws ExtsysException
-     */
-    public void delete(T data) throws ExtsysException {
-        try {
-            beginTransaction();
-            this.session.delete(data);
-            closeTransaction();
-        } catch (Exception e) {
-            transactionRollBack();
-            throw new ExtsysException("", "error while deleting data.errorMsg:" + e.getMessage());
-        } finally {
-            closeSession();
-        }
+  /**
+   * delete entity.
+   * 
+   * @param data the object to delete
+   * @throws ExtsysException when db abnormal
+   */
+  public void delete(T data) throws ExtsysException {
+    try {
+      beginTransaction();
+      this.session.delete(data);
+      closeTransaction();
+    } catch (Exception error) {
+      transactionRollBack();
+      throw new ExtsysException("", "error while deleting data.errorMsg:" + error.getMessage());
+    } finally {
+      closeSession();
     }
+  }
 
-    /**
-     * @param data the object to create
-     * @return
-     * @throws ExtsysException
-     */
-    public T create(T data) throws ExtsysException {
-        try {
-            beginTransaction();
-            session.save(data);
-            closeTransaction();
-        } catch (HibernateException e) {
-            transactionRollBack();
-            throw new ExtsysException("", "error while creating data.errorMsg:" + e.getMessage());
-        } finally {
-            closeSession();
-        }
-        return data;
+  /**
+   * create entity.
+   * 
+   * @param data the object to create
+   * @return T
+   * @throws ExtsysException when db abnormal
+   * 
+   */
+  public T create(T data) throws ExtsysException {
+    try {
+      beginTransaction();
+      session.save(data);
+      closeTransaction();
+    } catch (HibernateException error) {
+      transactionRollBack();
+      throw new ExtsysException("", "error while creating data.errorMsg:" + error.getMessage());
+    } finally {
+      closeSession();
     }
+    return data;
+  }
 
-    public List<T> unionQuery(String unionHql) throws ExtsysException {
-        List<T> data;
-        try {
-            beginTransaction();
-            Query query = this.session.createQuery(unionHql);
-            data = query.list();
-            closeTransaction();
-        } catch (Exception e) {
-            transactionRollBack();
-            throw new ExtsysException("",
-                    "error while union query data.errorMsg:" + e.getMessage());
-        } finally {
-            closeSession();
-        }
-        return data;
+  /**
+   * query entity by condition.
+   * 
+   * @param unionHql query condition.
+   * @return T
+   * @throws ExtsysException when db abnormal
+   * 
+   */
+  public List<T> unionQuery(String unionHql) throws ExtsysException {
+    List<T> data;
+    try {
+      beginTransaction();
+      Query query = this.session.createQuery(unionHql);
+      data = query.list();
+      closeTransaction();
+    } catch (Exception error) {
+      transactionRollBack();
+      throw new ExtsysException("", "error while union query data.errorMsg:" + error.getMessage());
+    } finally {
+      closeSession();
     }
+    return data;
+  }
 
-    public int unionDelete(String unionHql) throws ExtsysException {
-        int num = 0;
-        try {
-            beginTransaction();
-            Query query = this.session.createQuery(unionHql);
-            num = query.executeUpdate();
-            closeTransaction();
-        } catch (Exception e) {
-            transactionRollBack();
-            throw new ExtsysException("",
-                    "error while union query data.errorMsg:" + e.getMessage());
-        } finally {
-            closeSession();
-        }
-        return num;
+  /**
+   * delete entity by condition.
+   * 
+   * @param unionHql delete condition.
+   * @return T
+   * @throws ExtsysException when db abnormal
+   * 
+   */
+  public int unionDelete(String unionHql) throws ExtsysException {
+    int num = 0;
+    try {
+      beginTransaction();
+      Query query = this.session.createQuery(unionHql);
+      num = query.executeUpdate();
+      closeTransaction();
+    } catch (Exception error) {
+      transactionRollBack();
+      throw new ExtsysException("", "error while union query data.errorMsg:" + error.getMessage());
+    } finally {
+      closeSession();
     }
+    return num;
+  }
 
-    /**
-     * @param queryParams the condition map used to query objects
-     * @return
-     * @throws ExtsysException
-     */
-    @SuppressWarnings("unchecked")
-    public List<T> query(Map<String, String> queryParams) throws ExtsysException {
-        List<T> result = null;
-        try {
-            beginTransaction();
-            Criteria criteria = this.session.createCriteria(entityClass);
-            for (String key : queryParams.keySet()) {
-                criteria.add(Restrictions.eq(key, queryParams.get(key)));
-            }
-            result = (List<T>) criteria.list();
-            closeTransaction();
-        } catch (HibernateException e) {
-            throw new ExtsysException("", "error while querying data.errorMsg:" + e.getMessage());
-        } finally {
-            closeSession();
-        }
-        return result;
+  /**
+   * query entity by condition map.
+   * 
+   * @param queryParams the condition map used to query objects
+   * @return List
+   * @throws ExtsysException when db abnormal
+   */
+  @SuppressWarnings("unchecked")
+  public List<T> query(Map<String, String> queryParams) throws ExtsysException {
+    List<T> result = null;
+    try {
+      beginTransaction();
+      Criteria criteria = this.session.createCriteria(entityClass);
+      for (String key : queryParams.keySet()) {
+        criteria.add(Restrictions.eq(key, queryParams.get(key)));
+      }
+      result = (List<T>) criteria.list();
+      closeTransaction();
+    } catch (HibernateException error) {
+      throw new ExtsysException("", "error while querying data.errorMsg:" + error.getMessage());
+    } finally {
+      closeSession();
     }
+    return result;
+  }
 
-    protected void beginTransaction() {
-        this.session = this.sessionFactory.openSession();
-        this.session.beginTransaction();
-    }
+  protected void beginTransaction() {
+    this.session = this.sessionFactory.openSession();
+    this.session.beginTransaction();
+  }
 
-    protected void closeTransaction() {
-        this.session.getTransaction().commit();
-    }
+  protected void closeTransaction() {
+    this.session.getTransaction().commit();
+  }
 
-    protected void closeSession() {
-        this.session.close();
-    }
+  protected void closeSession() {
+    this.session.close();
+  }
 
-    protected void transactionRollBack() {
-        this.session.getTransaction().rollback();
-    }
+  protected void transactionRollBack() {
+    this.session.getTransaction().rollback();
+  }
 
 }

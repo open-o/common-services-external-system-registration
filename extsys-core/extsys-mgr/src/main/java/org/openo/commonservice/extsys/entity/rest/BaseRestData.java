@@ -20,99 +20,102 @@ import org.openo.commonservice.extsys.entity.db.BaseData;
 
 public class BaseRestData {
 
-    private String instanceId;
+  private String instanceId;
 
-    private String name;
+  private String name;
 
-    private String vendor;
+  private String vendor;
 
-    private String version;
+  private String version;
 
-    private String description;
+  private String description;
 
-    private String type;
+  private String type;
 
-    private String createTime;
+  private String createTime;
 
-    private String category;
+  private String category;
 
-    public String getInstanceId() {
-        return instanceId;
-    }
+  public String getInstanceId() {
+    return instanceId;
+  }
 
-    public void setInstanceId(String instanceId) {
-        this.instanceId = instanceId;
-    }
+  public void setInstanceId(String instanceId) {
+    this.instanceId = instanceId;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public String getVendor() {
-        return vendor;
-    }
+  public String getVendor() {
+    return vendor;
+  }
 
-    public void setVendor(String vendor) {
-        this.vendor = vendor;
-    }
+  public void setVendor(String vendor) {
+    this.vendor = vendor;
+  }
 
-    public String getVersion() {
-        return version;
-    }
+  public String getVersion() {
+    return version;
+  }
 
-    public void setVersion(String version) {
-        this.version = version;
-    }
+  public void setVersion(String version) {
+    this.version = version;
+  }
 
-    public String getDescription() {
-        return description;
-    }
+  public String getDescription() {
+    return description;
+  }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+  public void setDescription(String description) {
+    this.description = description;
+  }
 
-    public String getType() {
-        return type;
-    }
+  public String getType() {
+    return type;
+  }
 
-    public void setType(String type) {
-        this.type = type;
-    }
+  public void setType(String type) {
+    this.type = type;
+  }
 
-    public String getCreateTime() {
-        return createTime;
-    }
+  public String getCreateTime() {
+    return createTime;
+  }
 
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
-    }
+  public void setCreateTime(String createTime) {
+    this.createTime = createTime;
+  }
 
-    public String getCategory() {
-        return category;
-    }
+  public String getCategory() {
+    return category;
+  }
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
+  public void setCategory(String category) {
+    this.category = category;
+  }
 
-    public BaseRestData() {
+  public BaseRestData() {
 
-    }
+  }
 
-    public BaseRestData(BaseData data) {
-        this.createTime = data.getCreateTime();
-        this.description = data.getDescription();
-        this.name = data.getName();
-        this.type = data.getType();
-        this.vendor = data.getVendor();
-        this.version = data.getVersion();
-        this.instanceId = data.getId();
-        this.category = data.getCategory();
+  /**
+   *  base esr entity.
+   */
+  public BaseRestData(BaseData data) {
+    this.createTime = data.getCreateTime();
+    this.description = data.getDescription();
+    this.name = data.getName();
+    this.type = data.getType();
+    this.vendor = data.getVendor();
+    this.version = data.getVersion();
+    this.instanceId = data.getId();
+    this.category = data.getCategory();
 
-    }
+  }
 }

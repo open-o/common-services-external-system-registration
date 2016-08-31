@@ -16,12 +16,12 @@
 
 package org.openo.commonservice.extsys.entity.db;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "extsys_vim_table")
@@ -30,59 +30,59 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class VimData extends BaseData {
 
 
-    @Column(name = "URL")
-    private String url;
+  @Column(name = "URL")
+  private String url;
 
-    @Column(name = "USERNAME")
-    private String userName;
+  @Column(name = "USERNAME")
+  private String userName;
 
-    @Column(name = "PASSWORD")
-    private String password;
+  @Column(name = "PASSWORD")
+  private String password;
 
-    @Column(name = "DOMAIN")
-    private String domain;
+  @Column(name = "DOMAIN")
+  private String domain;
 
-    @Column(name = "TENANT")
-    private String tenant;
+  @Column(name = "TENANT")
+  private String tenant;
 
-    public String getDomain() {
-        return domain;
-    }
+  public String getDomain() {
+    return domain;
+  }
 
-    public void setDomain(String domain) {
-        this.domain = domain;
-    }
+  public void setDomain(String domain) {
+    this.domain = domain;
+  }
 
-    public String getTenant() {
-        return tenant;
-    }
+  public String getTenant() {
+    return tenant;
+  }
 
-    public void setTenant(String tenant) {
-        this.tenant = tenant;
-    }
+  public void setTenant(String tenant) {
+    this.tenant = tenant;
+  }
 
-    public String getUrl() {
-        return url;
-    }
+  public String getUrl() {
+    return url;
+  }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+  public void setUrl(String url) {
+    this.url = url;
+  }
 
-    public String getUserName() {
-        return userName;
-    }
+  public String getUserName() {
+    return userName;
+  }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
+  public void setUserName(String userName) {
+    this.userName = userName;
+  }
 
-    public String getPassword() {
-        return password;
-    }
+  public String getPassword() {
+    return password;
+  }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+  public void setPassword(String password) {
+    this.password = password;
+  }
 
 }

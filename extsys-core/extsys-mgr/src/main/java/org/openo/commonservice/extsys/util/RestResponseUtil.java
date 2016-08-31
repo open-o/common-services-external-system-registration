@@ -20,22 +20,31 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 public class RestResponseUtil {
-    public static Response getSuccessResponse(Object obj) {
-        if (obj != null)
-            return Response.ok(obj).build();
-        else
-            return Response.ok().build();
+  
+  /**
+   * get http success entity.
+   */
+  public static Response getSuccessResponse(Object obj) {
+    if (obj != null) {
+      return Response.ok(obj).build();
+    } else {
+      return Response.ok().build();
+    }
+  }
+
+  public static Response getCreateSussceeResponse(Object obj) {
+    return Response.status(Status.CREATED).entity(obj).build();
+  }
+  
+  /**
+   * get http error entity.
+   */
+  public static Response getErrorResponse(Object obj) {
+    if (obj != null) {
+      return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(obj).build();
+    } else {
+      return Response.serverError().build();
     }
 
-    public static Response getCreateSussceeResponse(Object obj) {
-        return Response.status(Status.CREATED).entity(obj).build();
-    }
-
-    public static Response getErrorResponse(Object obj) {
-        if (obj != null)
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(obj).build();
-        else
-            return Response.serverError().build();
-
-    }
+  }
 }

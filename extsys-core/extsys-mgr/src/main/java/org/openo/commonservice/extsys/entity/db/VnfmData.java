@@ -16,12 +16,12 @@
 
 package org.openo.commonservice.extsys.entity.db;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "extsys_vnfm_table")
@@ -29,58 +29,58 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class VnfmData extends BaseData {
 
-    @Column(name = "URL")
-    private String url;
-    @Column(name = "USERNAME")
-    private String userName;
+  @Column(name = "URL")
+  private String url;
+  @Column(name = "USERNAME")
+  private String userName;
 
-    @Column(name = "PASSWORD")
-    private String password;
+  @Column(name = "PASSWORD")
+  private String password;
 
-    @Column(name = "VIMID")
-    private String vimId;
+  @Column(name = "VIMID")
+  private String vimId;
 
-    @Column(name = "CERTIFICATEURL")
-    private String certificateUrl;
+  @Column(name = "CERTIFICATEURL")
+  private String certificateUrl;
 
-    public String getUrl() {
-        return url;
-    }
+  public String getUrl() {
+    return url;
+  }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+  public void setUrl(String url) {
+    this.url = url;
+  }
 
-    public String getUserName() {
-        return userName;
-    }
+  public String getUserName() {
+    return userName;
+  }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
+  public void setUserName(String userName) {
+    this.userName = userName;
+  }
 
-    public String getPassword() {
-        return password;
-    }
+  public String getPassword() {
+    return password;
+  }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+  public void setPassword(String password) {
+    this.password = password;
+  }
 
-    public String getVimId() {
-        return vimId;
-    }
+  public String getVimId() {
+    return vimId;
+  }
 
-    public void setVimId(String vimId) {
-        this.vimId = vimId;
-    }
+  public void setVimId(String vimId) {
+    this.vimId = vimId;
+  }
 
-    public String getCertificateUrl() {
-        return certificateUrl;
-    }
+  public String getCertificateUrl() {
+    return certificateUrl;
+  }
 
-    public void setCertificateUrl(String certificateUrl) {
-        this.certificateUrl = certificateUrl;
-    }
+  public void setCertificateUrl(String certificateUrl) {
+    this.certificateUrl = certificateUrl;
+  }
 
 }

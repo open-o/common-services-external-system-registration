@@ -21,16 +21,16 @@ import org.openo.commonservice.extsys.entity.db.VnfmData;
 
 
 /**
- * host DAO class
+ * vnfm for Hibernate DAO classes.<br>
  * 
- * *@author 10159474
- *
+ * @author 10159474
+ * 
  */
 public class VnfmDao extends BaseDao<VnfmData> {
 
-    public VnfmDao(SessionFactory sessionFactory) {
-        super(sessionFactory);
-    }
+  public VnfmDao(SessionFactory sessionFactory) {
+    super(sessionFactory);
+  }
 
 
 }

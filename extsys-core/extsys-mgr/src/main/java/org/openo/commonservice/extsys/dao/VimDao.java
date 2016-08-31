@@ -22,16 +22,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * DAO class
+ * vim for Hibernate DAO classes.<br>
  * 
- * *@author 10159474
- *
+ * @author 10159474
+ * 
  */
 public class VimDao extends BaseDao<VimData> {
-    private static final Logger logger = LoggerFactory.getLogger(VimDao.class);
+  private static final Logger logger = LoggerFactory.getLogger(VimDao.class);
 
-    public VimDao(SessionFactory sessionFactory) {
-        super(sessionFactory);
-    }
+  public VimDao(SessionFactory sessionFactory) {
+    super(sessionFactory);
+  }
 
 }

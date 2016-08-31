@@ -17,9 +17,11 @@
 package org.openo.commonservice.extsys.common;
 
 /**
- * *@author 10159474
- *
+ * Parameters. <br/>
+ * 
+ * @author sun qi
+ * @version ESR V1
  */
 public enum Parameters {
-    emsId, sdnControllerId, vimId, vnfmId, id
+  emsId, sdnControllerId, vimId, vnfmId, id
 }

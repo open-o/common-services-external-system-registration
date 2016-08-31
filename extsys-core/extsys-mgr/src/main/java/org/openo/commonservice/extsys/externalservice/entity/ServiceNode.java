@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.openo.commonservice.extsys.externalservice.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -21,17 +22,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * @author 10159474
- *
- */
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ServiceNode {
-    private String ip;
-    private String port;
-    private int ttl;
+  private String ip;
+  private String port;
+  private int ttl;
 }
