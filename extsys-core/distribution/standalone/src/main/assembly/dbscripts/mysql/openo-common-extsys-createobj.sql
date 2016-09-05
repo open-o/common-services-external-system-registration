@@ -15,7 +15,25 @@
 -- limitations under the License.
 --
 
+/******************drop old database and user***************************/
+use mysql;
+drop database IF  EXISTS extsys;
+delete from user where User='extsys';
+FLUSH PRIVILEGES;
+
+/******************create new database and user***************************/
+create database extsys CHARACTER SET utf8;
+
+GRANT ALL PRIVILEGES ON extsys.* TO 'extsys'@'%' IDENTIFIED BY 'extsys' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON mysql.* TO 'extsys'@'%' IDENTIFIED BY 'extsys' WITH GRANT OPTION;
+
+GRANT ALL PRIVILEGES ON extsys.* TO 'extsys'@'localhost' IDENTIFIED BY 'extsys' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON mysql.* TO 'extsys'@'localhost' IDENTIFIED BY 'extsys' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+
 use extsys;
+set Names 'utf8';
+/******************drop old table and create new***************************/
 DROP TABLE IF EXISTS extsys_base_table;
 CREATE TABLE extsys_base_table (
 	ID                   VARCHAR(200)       NOT NULL,	
@@ -70,4 +88,5 @@ CREATE TABLE extsys_vnfm_table (
 	CERTIFICATEURL          VARCHAR(200)       NULL,
     CONSTRAINT extsys_vnfm_table PRIMARY KEY(VNFMID)
 );
+
 
