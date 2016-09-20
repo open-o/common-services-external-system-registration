@@ -1,4 +1,5 @@
-﻿#
+﻿#!/bin/bash
+#
 #
 # Copyright 2016 [ZTE] and others.
 #
@@ -31,5 +32,5 @@ echo @JAVA_OPTS@ $JAVA_OPTS
 class_path="$RUNHOME/:$RUNHOME/extsys-service.jar"
 echo @class_path@ $class_path
 
-"$JAVA" $JAVA_OPTS -classpath "$class_path" org.openo.commonservice.extsys.ExtsysApp server "$RUNHOME/conf/catalog.yml"
+"$JAVA" $JAVA_OPTS -classpath "$class_path" org.openo.commonservice.extsys.ExtsysApp server "$RUNHOME/conf/extsys.yml"
 
