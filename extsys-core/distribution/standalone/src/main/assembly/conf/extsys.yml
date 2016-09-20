@@ -70,8 +70,8 @@ logging:
     - type: file
       threshold: INFO
       logFormat: "%d{yyyy-MM-dd HH:mm:ss SSS} %-5p [%c][%t] - %m%n"
-      currentLogFilename: ./logs/extsys.log
-      archivedLogFilenamePattern: ./logs/zip/extsys-%d{yyyy-MM-dd}.log.gz
+      currentLogFilename: ./works/logs/extsys.log
+      archivedLogFilenamePattern: ./works/logs/zip/extsys-%d{yyyy-MM-dd}.log.gz
       archivedFileCount: 7
       timeZone: UTC
 
