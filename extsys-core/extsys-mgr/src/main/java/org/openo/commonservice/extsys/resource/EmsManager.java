@@ -48,7 +48,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/emss")
+@Path("/emses")
 @Api(tags = {" ems Management "})
 public class EmsManager {
 
