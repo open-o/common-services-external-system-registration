@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 [ZTE] and others.
+ * Copyright 2016 ZTE Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 // The purpose of the `Content` object is to abstract away the data conversions
 // to and from raw content entities as strings. For example, you want to be able
 // to pass in a Javascript object and have it be automatically converted into a
