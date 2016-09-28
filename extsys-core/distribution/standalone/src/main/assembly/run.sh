@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-﻿#!/bin/bash
+#!/bin/bash
 #
 #
 # Copyright 2016 [ZTE] and others.
