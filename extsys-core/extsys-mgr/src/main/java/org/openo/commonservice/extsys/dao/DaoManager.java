@@ -73,9 +73,9 @@ public class DaoManager {
    * @return Returns the vim dao.
    */
   public VimDao getVimDao() {
-    if (vimDao == null) {
+   // if (vimDao == null) {
       vimDao = new VimDao(sessionFactory);
-    }
+   // }
     return vimDao;
   }
 
@@ -87,9 +87,9 @@ public class DaoManager {
    * @return Returns the ems dao.
    */
   public EmsDao getEmsDao() {
-    if (emsDao == null) {
+   // if (emsDao == null) {
       emsDao = new EmsDao(sessionFactory);
-    }
+   // }
     return emsDao;
   }
 
@@ -101,9 +101,9 @@ public class DaoManager {
    * @return Returns the vnfm dao.
    */
   public VnfmDao getVnfmDao() {
-    if (vnfmDao == null) {
+    //if (vnfmDao == null) {
       vnfmDao = new VnfmDao(sessionFactory);
-    }
+   // }
     return vnfmDao;
   }
 
@@ -115,9 +115,9 @@ public class DaoManager {
    * @return Returns the sdnc dao.
    */
   public SdncDao getSdncDao() {
-    if (sdncDao == null) {
+   // if (sdncDao == null) {
       sdncDao = new SdncDao(sessionFactory);
-    }
+    //}
     return sdncDao;
   }
 
@@ -129,9 +129,9 @@ public class DaoManager {
    * @return Returns the common dao.
    */
   public CommonDao getCommonDao() {
-    if (commonDao == null) {
+    //if (commonDao == null) {
       commonDao = new CommonDao(sessionFactory);
-    }
+   // }
     return commonDao;
   }
 
