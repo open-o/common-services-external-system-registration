@@ -78,7 +78,7 @@ public class VimManager {
     }
     if (list == null || list.size() <= 0) {
       LOGGER.info("query all vim end.no match condition record");
-      return RestResponseUtil.getSuccessResponse(null);
+      return RestResponseUtil.getSuccessResponse(new ArrayList<VimRestData>());
     } else {
       LOGGER.info("query all vim end.size:" + list.size());
       ArrayList<VimRestData> restList = new ArrayList<VimRestData>();

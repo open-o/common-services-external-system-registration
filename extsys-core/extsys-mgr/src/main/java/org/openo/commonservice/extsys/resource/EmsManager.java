@@ -80,7 +80,7 @@ public class EmsManager {
     }
     if (list == null || list.size() <= 0) {
       LOGGER.info("query all ems end.no match condition record");
-      return RestResponseUtil.getSuccessResponse(null);
+      return RestResponseUtil.getSuccessResponse(new ArrayList<EmsRestData>());
     } else {
       LOGGER.info("query all ems end.size:" + list.size());
       ArrayList<EmsRestData> restList = new ArrayList<EmsRestData>();
