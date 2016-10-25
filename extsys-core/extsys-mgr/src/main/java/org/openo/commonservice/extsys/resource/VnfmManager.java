@@ -78,7 +78,7 @@ public class VnfmManager {
     }
     if (list == null || list.size() <= 0) {
       LOGGER.info("query all vnfm end.no match condition record");
-      return RestResponseUtil.getSuccessResponse(null);
+      return RestResponseUtil.getSuccessResponse(new ArrayList<VnfmRestData>());
     } else {
       LOGGER.info("query all vnfm end.size:" + list.size());
       ArrayList<VnfmRestData> restList = new ArrayList<VnfmRestData>();

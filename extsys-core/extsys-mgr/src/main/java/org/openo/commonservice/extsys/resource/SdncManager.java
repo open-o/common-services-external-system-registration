@@ -80,7 +80,7 @@ public class SdncManager {
     }
     if (list == null || list.size() <= 0) {
       LOGGER.info("query all sdnc end.no match condition record");
-      return RestResponseUtil.getSuccessResponse(null);
+      return RestResponseUtil.getSuccessResponse(new ArrayList<SdncRestData>());
     } else {
       LOGGER.info("query all sdnc end.size:" + list.size());
       ArrayList<SdncRestData> restList = new ArrayList<SdncRestData>();

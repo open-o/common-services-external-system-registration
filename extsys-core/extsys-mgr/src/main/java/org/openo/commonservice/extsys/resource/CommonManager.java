@@ -77,7 +77,7 @@ public class CommonManager {
     }
     if (list == null || list.size() <= 0) {
       LOGGER.info("query all instance end.no match condition record");
-      return RestResponseUtil.getSuccessResponse(null);
+      return RestResponseUtil.getSuccessResponse(new ArrayList<BaseRestData>());
     } else {
       LOGGER.info("query all instance end.size:" + list.size());
       ArrayList<BaseRestData> restList = new ArrayList<BaseRestData>();
