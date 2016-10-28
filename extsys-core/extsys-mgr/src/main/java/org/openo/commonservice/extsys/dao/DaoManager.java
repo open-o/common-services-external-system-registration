@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.openo.commonservice.extsys.dao;
 
 import org.hibernate.SessionFactory;
@@ -72,10 +73,8 @@ public class DaoManager {
   /**
    * @return Returns the vim dao.
    */
-  public VimDao getVimDao() {
-   // if (vimDao == null) {
-      vimDao = new VimDao(sessionFactory);
-   // }
+  public VimDao getVimDao() {    
+    vimDao = new VimDao(sessionFactory);
     return vimDao;
   }
 
@@ -87,9 +86,7 @@ public class DaoManager {
    * @return Returns the ems dao.
    */
   public EmsDao getEmsDao() {
-   // if (emsDao == null) {
-      emsDao = new EmsDao(sessionFactory);
-   // }
+    emsDao = new EmsDao(sessionFactory);
     return emsDao;
   }
 
@@ -101,9 +98,7 @@ public class DaoManager {
    * @return Returns the vnfm dao.
    */
   public VnfmDao getVnfmDao() {
-    //if (vnfmDao == null) {
-      vnfmDao = new VnfmDao(sessionFactory);
-   // }
+    vnfmDao = new VnfmDao(sessionFactory);
     return vnfmDao;
   }
 
@@ -115,9 +110,7 @@ public class DaoManager {
    * @return Returns the sdnc dao.
    */
   public SdncDao getSdncDao() {
-   // if (sdncDao == null) {
-      sdncDao = new SdncDao(sessionFactory);
-    //}
+    sdncDao = new SdncDao(sessionFactory);
     return sdncDao;
   }
 
@@ -129,9 +122,7 @@ public class DaoManager {
    * @return Returns the common dao.
    */
   public CommonDao getCommonDao() {
-    //if (commonDao == null) {
-      commonDao = new CommonDao(sessionFactory);
-   // }
+    commonDao = new CommonDao(sessionFactory);
     return commonDao;
   }
 
