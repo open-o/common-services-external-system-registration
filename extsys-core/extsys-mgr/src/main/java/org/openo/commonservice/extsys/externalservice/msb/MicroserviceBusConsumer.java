@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.openo.commonservice.extsys.externalservice.msb;
 
 import com.eclipsesource.jaxrs.consumer.ConsumerFactory;
@@ -20,9 +21,9 @@ import com.eclipsesource.jaxrs.consumer.ConsumerFactory;
 import org.glassfish.jersey.client.ClientConfig;
 import org.openo.commonservice.extsys.common.Config;
 import org.openo.commonservice.extsys.externalservice.entity.ServiceRegisterEntity;
+import org.openo.commonservice.extsys.util.ExtsysDbUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 
 
 
@@ -35,6 +36,7 @@ public class MicroserviceBusConsumer {
    */
   public static boolean registerService(ServiceRegisterEntity entity) {
     ClientConfig config = new ClientConfig();
+    LOG.info("microservice register body:" + ExtsysDbUtil.objectToString(entity));
     try {
       MicroserviceBusRest resourceserviceproxy = ConsumerFactory.createConsumer(
           Config.getConfigration().getMsbServerAddr(), config, MicroserviceBusRest.class);

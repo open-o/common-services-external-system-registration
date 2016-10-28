@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.openo.commonservice.extsys.common;
 
 import org.openo.commonservice.extsys.ExtsysAppConfiguration;

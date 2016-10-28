@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.openo.commonservice.extsys.externalservice.entity;
 
+package org.openo.commonservice.extsys.externalservice.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -45,7 +45,11 @@ public class ServiceRegisterEntity {
    */
   public void setSingleNode(String ip, String port, int ttl) {
     ServiceNode node = new ServiceNode();
-    node.setIp(ip);
+    if (ip != null && ip.length() > 0) {
+      node.setIp(ip);
+    } else {
+      node.setIp(null);
+    }
     node.setPort(port);
     node.setTtl(ttl);
     nodes.add(node);

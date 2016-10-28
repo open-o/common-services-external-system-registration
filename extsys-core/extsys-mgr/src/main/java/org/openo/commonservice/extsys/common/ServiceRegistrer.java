@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.openo.commonservice.extsys.common;
 
 import org.openo.commonservice.extsys.externalservice.entity.ServiceRegisterEntity;
@@ -70,7 +71,7 @@ public class ServiceRegistrer implements Runnable {
     extsysEntity.setProtocol("REST");
     extsysEntity.setVersion("v1");
     extsysEntity.setUrl("/openoapi/extsys/v1");
-    extsysEntity.setSingleNode(null, "8100", 0);
+    extsysEntity.setSingleNode(Config.getConfigration().getServiceIp(), "8100", 0);
     extsysEntity.setVisualRange("1");
   }
 }

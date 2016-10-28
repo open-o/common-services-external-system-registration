@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.openo.commonservice.extsys;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -34,7 +35,8 @@ public class ExtsysAppConfiguration extends Configuration {
 
   @NotEmpty
   private String msbServerAddr;
-
+  @Valid
+  private String serviceIp;
 
   @Valid
   @NotNull
@@ -78,5 +80,14 @@ public class ExtsysAppConfiguration extends Configuration {
   @JsonProperty
   public void setMsbServerAddr(String msbServerAddr) {
     this.msbServerAddr = msbServerAddr;
+  }
+  @JsonProperty
+  public String getServiceIp() {
+    return serviceIp;
+  }
+
+  @JsonProperty
+  public void setServiceIp(String serviceIp) {
+    this.serviceIp = serviceIp;
   }
 }
