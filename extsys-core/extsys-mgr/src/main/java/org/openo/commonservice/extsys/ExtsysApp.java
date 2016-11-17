@@ -35,7 +35,7 @@ import org.openo.commonservice.extsys.entity.db.EmsData;
 import org.openo.commonservice.extsys.entity.db.SdncData;
 import org.openo.commonservice.extsys.entity.db.VimData;
 import org.openo.commonservice.extsys.entity.db.VnfmData;
-
+import org.openo.commonservice.extsys.hibernate.HibernateBundleAgent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,23 +52,12 @@ public class ExtsysApp extends Application<ExtsysAppConfiguration> {
     return "OPENO-Extsys";
   }
 
-  private final HibernateBundle<ExtsysAppConfiguration> bundle =
-      new HibernateBundle<ExtsysAppConfiguration>(EmsData.class, BaseData.class, VimData.class,
-          VnfmData.class, SdncData.class) {
-        @Override
-        public DataSourceFactory getDataSourceFactory(ExtsysAppConfiguration configuration) {
-          return configuration.getDataSourceFactory();
-        }
-      };
+  private final HibernateBundleAgent bundle = new HibernateBundleAgent();
 
   @Override
   public void initialize(Bootstrap<ExtsysAppConfiguration> bootstrap) {
     bootstrap.addBundle(new AssetsBundle("/api-doc", "/api-doc", "index.html", "api-doc"));
     initDb(bootstrap);
-  }
-
-  private void initDao() {
-    DaoManager.getInstance().setSessionFactory(bundle.getSessionFactory());
   }
 
   private void initService() {
@@ -83,8 +72,7 @@ public class ExtsysApp extends Application<ExtsysAppConfiguration> {
 
   @Override
   public void run(ExtsysAppConfiguration configuration, Environment environment) {
-    LOGGER.info("Start to initialize extsys.");
-    initDao();
+    LOGGER.info("Start to initialize extsys.");    
     environment.jersey().packages("org.openo.commonservice.extsys.resource");
     environment.jersey().register(MultiPartFeature.class);
     initSwaggerConfig(environment, configuration);

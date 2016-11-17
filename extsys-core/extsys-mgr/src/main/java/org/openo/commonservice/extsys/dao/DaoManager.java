@@ -18,6 +18,7 @@ package org.openo.commonservice.extsys.dao;
 
 import org.hibernate.SessionFactory;
 import org.openo.commonservice.extsys.common.ExtSysResuorceType;
+import org.openo.commonservice.extsys.exception.ExtsysException;
 
 /**
  * DAO manager class.<br>
@@ -47,7 +48,10 @@ public class DaoManager {
    * @param type resource Type
    * @return DAO
    */
-  public BaseDao<?> getDao(String type) {
+  public BaseDao<?> getDao(String type) throws ExtsysException {
+    if (sessionFactory == null) {
+      throw new ExtsysException("", "errorMsg:database connect init faild!");
+    }
     switch (ExtSysResuorceType.getType(type)) {
       case VIM:
         return getVimDao();
