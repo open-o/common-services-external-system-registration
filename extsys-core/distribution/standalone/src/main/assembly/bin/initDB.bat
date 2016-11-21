@@ -21,8 +21,9 @@ set password=%2
 set port=%3
 set host=%4
 echo start init extsys db
-echo HOME=$HOME
-cd /d %HOME%
+echo HOME=%HOME%
+set main_path=%HOME%..\
+cd /d %main_path%
 mysql -u%user% -p%password% -P%port% -h%host% < dbscripts\mysql\openo-common-extsys-createobj.sql
 set "err=%errorlevel%"
 if "%err%"=="0" (
