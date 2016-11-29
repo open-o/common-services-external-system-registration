@@ -26,7 +26,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>extsysparent</artifactId>
-    <name>openo/commonservice/extsys/extsysparent</name>
+    <name>common-services-external-system-registration/extsys-parent/extsysparent</name>
     <packaging>pom</packaging>
 
     <properties>

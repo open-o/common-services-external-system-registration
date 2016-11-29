@@ -27,7 +27,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.openo.common-services.external-system-registration</groupId>
     <artifactId>extsysparent-aggregator</artifactId>
-    <name>openo/commonservice/extsys/extsysparent-aggregator</name>
+    <name>common-services-external-system-registration/extsys-parent</name>
     <packaging>pom</packaging>
 
     <modules>
